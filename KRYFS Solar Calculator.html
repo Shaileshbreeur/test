@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>SolorCalculator</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <header>
+        <h1 class="text-center text-primary">Solar Calculator</h1>
+    </header>
+    <div style="/*style=&quot;background-color: lavender;*/">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-xl-11">
+                    <h3 class="text-info">Area converter (sq.foot to Sq.Meter)</h3>
+                </div>
+                <div class="col-xl-5"><label class="col-form-label"><strong>Area in Sq.Foot</strong></label></div>
+                <div class="col"><input type="text" id="feet"></div>
+                <div class="col-xl-4"><input class="form-control-plaintext" type="text" value="ft2" readonly=""></div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-xl-5"><label class="col-form-label"><strong>Area in Sq.meter</strong></label></div>
+                <div class="col-xl-3"><input type="text" id="metre"></div>
+                <div class="col"><input class="form-control-plaintext" type="text" value="m²" readonly=""></div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="text-danger">Client Input</h2>
+                </div>
+                <div class="col-xl-5"><label class="col-form-label"><strong>Area of the Roof</strong></label></div>
+                <div class="col-xl-3"><input type="text" id="smeter"></div>
+                <div class="col-xl-4"><span><strong>m²</strong></span></div>
+                <div class="col-xl-5"><label class="col-form-label"><strong>% of the Roof Top Area Available</strong></label></div>
+                <div class="col-xl-3"><input type="text" id="permeter"></div>
+                <div class="col"><input class="form-control-plaintext" type="text" value="%" readonly=""></div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="text-success">Output:</h1>
+                </div>
+                <div class="col-xl-5"><label class="col-form-label"><strong>Total Solor Installation Capacity (As Per Available Area)</strong></label></div>
+                <div class="col-xl-3"><input type="text" id="tmeter"></div>
+                <div class="col-xl-4"><span>kWp</span><i class="fa fa-star text-danger fa-xs"></i><i class="fa fa-star text-danger"></i></div>
+                <div class="col-xl-5"><label class="col-form-label"><strong>Tentativel Electricity Generation of the Solar Plant</strong></label></div>
+                <div class="col-xl-3"><input type="text" id="temeter"></div>
+                <div class="col-xl-4"><span> Units/Year</span><i class="fa fa-star text-danger fa-xs"></i><i class="fa fa-star text-danger"></i></div>
+                <div class="col-xl-5"><label class="col-form-label"><strong>Carbon dioxide emissions mitigated</strong></label></div>
+                <div class="col-xl-3"><input type="text" id="cdmeter"></div>
+                <div class="col-xl-4"><input class="form-control-plaintext" type="text" value="Tonne/Year" readonly=""></div>
+                <div class="col-xl-5"><label class="col-form-label"><strong>This installation will be equivalent to planting</strong></label></div>
+                <div class="col-xl-3"><input type="text" id="epmeter"></div>
+                <div class="col"><input class="form-control-plaintext" type="text" value="Teak trees over the life time. (Data from IISc) " readonly=""></div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="text-secondary"><strong>Capacity Requirement Check</strong></h1>
+                </div>
+                <div class="col-xl-5"><label class="col-form-label"><strong>Yearly Power Consumption of the Client</strong></label></div>
+                <div class="col-xl-3"><input type="text" id="ypower"></div>
+                <div class="col-xl-4"><input class="form-control-plaintext" type="text" value="Units/Year " readonly=""></div>
+                <div class="col-xl-5"><label class="col-form-label"><strong>Suggested Solar Installation Capacity (As Per Consumption)</strong></label></div>
+                <div class="col-xl-3"><input type="text" id="cpower"></div>
+                <div class="col"><span>kWp</span><i class="fa fa-star text-danger fa-xs"></i><i class="fa fa-star text-danger fa-xs"></i></div>
+            </div>
+        </div>
+    </div>
+    <section><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script>
+    $("#feet").keyup(function(){
+        var metre = $("#feet").val() * 0.092903;
+        $("#metre").val(metre);
+        $("#smeter").val(metre);
+    });
+    $("#metre").keyup(function(){
+        var feet = $("#metre").val() / 0.092903;
+        $("#feet").val(feet);
+        $("#smeter").val($("#metre").val());
+    });
+    $("#permeter").keyup(function(){
+        var totolmetre = ($("#permeter").val() * $("#smeter").val()) / 10;
+        $("#tmeter").val(totolmetre);
+        var spmeter= 1500 * $("#tmeter").val();
+        $("#temeter").val(spmeter);
+        var cdmeter=0.936*$("#temeter").val()/1000;
+        $("#cdmeter").val(cdmeter);
+        var epmeter = 1.580645 * $("#cdmeter").val();
+        epmeter = Math.round(epmeter);
+        $("#epmeter").val(epmeter);
+
+
+    });
+
+     $("#ypower").keyup(function(){
+        var metre2= $("#ypower").val() * 1500;
+        $("#cpower").val(metre2);
+
+    });
+
+
+
+
+
+</script></section>
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script id="bs-live-reload" data-sseport="50374" data-lastchange="1578467052766" src="/js/livereload.js"></script>
+</body>
+
+</html>
